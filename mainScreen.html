@@ -17,13 +17,45 @@
             <div class="stats-container">
                 <div id="moves-count"></div>
                 <div id="time"></div>
+                <div id="player-cont"></div>
             </div>
             <div class="game-container"></div>
             <button class="hide" id="stop">Stop Game</button>
         </div>
         <div class="conntrols-container">
+            <div class="menu">
+                <div class="player-bar">
+                    <button type="button" value="1">1 Player</button>
+                    <button type="button" value="2">2 Players</button>
+                    <button type="button" value="3">3 Players</button>
+                    <button type="button" value="4">4 Players</button>
+                </div>
+                <div class="field-bar">
+                    <button type="button" name="3x4">3 X 4</button>
+                    <button type="button" name="4x4">4 X 4</button>
+                    <button type="button" name="5x4">5 X 4</button>
+                </div>
+                <div class="icon-bar">
+                    <div class="card-container" data-card-value="dog">
+                        <div class="card-before">?</div>
+                        <div class="card-after">
+                        <img src="img/dog/dog1_preview_rev_1.png" class="image" height=64 width=64 /></div>
+                    </div>
+                    <div class="card-container" data-card-value="cat">
+                        <div class="card-before">?</div>
+                        <div class="card-after">
+                        <img src="img/cat/cat1-removebg-preview.png" class="image" height=64 width=64 /></div>
+                    </div>
+                    <div class="card-container" data-card-value="dino">
+                        <div class="card-before">?</div>
+                        <div class="card-after">
+                        <img src="img/dino/dino6-removebg-preview.png" class="image" height=64 width=64 /></div>
+                    </div>
+                </div>
+            </div>
             <p id="result"></p>
             <button id="start">Start Game</button>
+            <button id="next" class="hide">Next</button>
         </div>
         <script src="JS.js"></script>
     </body>
