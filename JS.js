@@ -128,14 +128,18 @@ const increaseCount = (index) => {
 };
 
 const findWinner = (array) => {
+    let result;
     let max = 0;
-    for(let i = 0; i < array.length; ++i){
+    for(let i = 0; i < array.length; i++){
         if(array[i].score > max){
-            max = array[i];
-        }
-    }
-    return max;
+            max = array[i].score;
+            result = array[i];
+        };
+    };
+    return result;
 };
+
+
 
 const generateRandom = (items, wid , len) => {
     let tempArr = [...items];
@@ -196,8 +200,11 @@ const generateDeck = (cardValues, wid, len) => {
                     increaseCount(turnPlayer);
                     if(winCount == Math.floor(cardValues.length / 2)){
                         let winner = findWinner(realPlayers);
+                        
                         result.innerHTML = `<h2>${winner.name} Won!</h2>
+                            <h3>Score: ${winner.score}</h3>
                         <h4>Moves: ${moveCount}</h4>`;
+
                         stopGame();
 
                     }
@@ -226,13 +233,14 @@ const generateDeck = (cardValues, wid, len) => {
 startButton.addEventListener("click", () => {
     moveCount = 0;
     time = 0;
+    initializer();
     controls.classList.add("hide");
     stopButton.classList.remove("hide");
     startButton.classList.add("hide");
     interval = setInterval(timeGenerator, 1000);
     moves.innerHTML = `<span>Moves: </span>${moveCount}`;
     playerCont.innerHTML = `<span>${realPlayers[turnPlayer].name} (${realPlayers[turnPlayer].score})`;
-    initializer();
+    
 
 } );
 
@@ -242,14 +250,14 @@ const initializer = () => {
     let cardValues;
     let widh;
     let leng;
-    if(activePlayers.getAttribute("value") === "2"){
+    if(activePlayers.getAttribute("value") === "2" && realPlayers.length < 2){
         realPlayers.push({name: "2nd Player", score: 0});
     }
-    else if(activePlayers.getAttribute("value") === "3"){
+    else if(activePlayers.getAttribute("value") === "3" && realPlayers.length < 3){
         realPlayers.push({name: "2nd Player", score: 0});
         realPlayers.push({name: "3rd Player", score: 0});
     }
-    else if(activePlayers.getAttribute("value") === "4"){
+    else if(activePlayers.getAttribute("value") === "4" && realPlayers.length < 4){
         realPlayers.push({name: "2nd Player", score: 0});
         realPlayers.push({name: "3rd Player", score: 0});
         realPlayers.push({name: "4th Player", score: 0});
@@ -277,16 +285,33 @@ const initializer = () => {
     else{
         cardValues = generateRandom(itemsDino, widh, leng);
     }
+    for(let i = 0; i < realPlayers.length; ++i){
+        realPlayers[i].score = 0;
+    }
     
+    
+    if(realPlayers.length > parseInt(activePlayers.getAttribute("value"))){
+        while(realPlayers.length != parseInt(activePlayers.getAttribute("value"))){
+            realPlayers.pop();
+            
+        }
+    }
+
+    if(cardValues.length < 1){
+        return;
+    }
+
+    
+
     generateDeck(cardValues, widh, leng);
     
 }; 
 
 stopButton.addEventListener("click", (stopGame = () => {
     for(let i = 0; i < realPlayers.length; ++i){
-        realPlayers.pop();
+        realPlayers[i].score = 0;
     }
-    realPlayers.push({name: "1st Player", score: 0})
+    turnPlayer = 0;
     controls.classList.remove("hide");
     menu.classList.add("hide");
     stopButton.classList.add("hide");
@@ -294,9 +319,13 @@ stopButton.addEventListener("click", (stopGame = () => {
     nextButton.addEventListener("click", () => {
         menu.classList.remove("hide");
         startButton.classList.remove("hide");
+        activeImage.classList.add("flipped");
         result.innerHTML = "";
         nextButton.classList.add("hide");
     });
     clearInterval(interval);
 
 }));
+
+
+

@@ -88,7 +88,7 @@ body{
 .menu{
     border: none;
     width: 90%;
-    height: 30%;
+    height: 50%;
     border-radius: 0.6em;
     box-shadow: 0 0.6em 2em rgba(86, 66, 0, 0.6);
     background-color: aliceblue;
